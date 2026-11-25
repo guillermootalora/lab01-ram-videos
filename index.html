@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 01 · Videos tutoriales</title>
+<link rel="stylesheet" href="player.css">
+</head>
+<body>
+<div class="page">
+ <div class="top">
+  <div>
+   <h1 data-i18n="title">Laboratorio 01 · Análisis forense de memoria RAM</h1>
+   <div class="sub" data-i18n="sub">Video tutorial · Parte 1: lo que hace el estudiante</div>
+  </div>
+  <div class="grow"></div>
+  <button class="pill" id="theme" aria-label="Tema claro u oscuro">◐ <span data-i18n="theme">Claro / oscuro</span></button>
+ </div>
+
+ <div class="tabsbar" role="tablist">
+  <button class="vtab" data-tab="est" role="tab">🎓 <span data-i18n="tabEst">Parte 1 · Estudiante</span></button>
+  <button class="vtab" data-tab="doc" role="tab">🛠 <span data-i18n="tabDoc">Parte 2 · Docente</span></button>
+ </div>
+ <div class="frame">
+  <div class="player" id="player">
+   <div class="screen" id="screen">
+    <video id="introv" playsinline preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;display:none;z-index:5"></video>
+    <div id="stage"></div>
+    <div class="subs" id="subs"></div>
+    <div class="narr" id="narr"><div class="bars"><i></i><i></i><i></i><i></i><i></i></div><span id="narr-t">Narración</span></div>
+    <div class="big" id="big"><button aria-label="Reproducir">▶</button></div>
+   </div>
+   <div class="bar">
+    <div class="seek" id="seek" aria-label="Línea de tiempo"><div class="track"></div><div id="ticks"></div><div class="fill" id="fill"></div><div class="knob" id="knob"></div><div class="tip" id="tip"></div></div>
+    <div class="row">
+     <button class="ctl" id="pp" aria-label="Reproducir"></button>
+     <button class="ctl" id="back" aria-label="Retroceder 10 segundos"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a6 6 0 11-6 6H4a8 8 0 108-8z"/></svg></button>
+     <button class="ctl" id="fwd" aria-label="Adelantar 10 segundos"><svg viewBox="0 0 24 24"><path d="M12 5V2l5 4-5 4V7a6 6 0 106 6h2a8 8 0 11-8-8z"/></svg></button>
+     <span class="time" id="time">0:00 / 0:00</span>
+     <input class="vol" id="vol" type="range" min="0" max="1" step="0.05" value="1" aria-label="Volumen">
+     <span class="spacer"></span>
+     <span class="lbl" data-i18n="lang">Idioma</span>
+     <span class="grp"><button class="ctl" data-lang="es">ES</button><button class="ctl" data-lang="en">EN</button></span>
+     <span class="lbl" data-i18n="voice">Voz</span>
+     <span class="grp"><button class="ctl" data-voice="f" aria-label="Voz femenina">♀</button><button class="ctl" data-voice="m" aria-label="Voz masculina">♂</button></span>
+     <span class="lbl" data-i18n="subs">Subtítulos</span>
+     <span class="grp"><button class="ctl" data-subs="es">ES</button><button class="ctl" data-subs="en">EN</button><button class="ctl" data-subs="off">✕</button></span>
+     <span class="szw" title="Tamaño de subtítulos"><span class="lbl" style="font-size:11px">A</span><input class="vol" id="subsz" type="range" min="0.7" max="1.8" step="0.05" value="1" aria-label="Tamaño de subtítulos"><span class="lbl" style="font-size:17px">A</span></span>
+     <button class="ctl" id="fs" aria-label="Pantalla completa"><svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
+    </div>
+    <div class="sign">Creado por el Ingeniero Guillermo Otálora</div>
+   </div>
+  </div>
+ </div>
+
+ <div class="below">
+  <div class="card">
+   <h2 data-i18n="about">Sobre este video</h2>
+   <p class="note" data-i18n="aboutT">Recorrido completo de la Parte 1 del laboratorio, con las salidas y respuestas reales: verificar la imagen, instalar Volatility3, ejecutar los plugins, buscar las URLs, guardar los anexos y redactar el informe. Use el menú de capítulos para ir a cualquier paso.</p>
+   <p class="note" style="margin-top:10px" data-i18n="keys">Atajos: espacio = reproducir o pausar · ← → = 5 segundos · F = pantalla completa · C = subtítulos.</p>
+  </div>
+  <div class="card"><h2 data-i18n="chapters">Capítulos</h2><ul class="chaps" id="chaps"></ul></div>
+ </div>
+ <div class="foot">Creado por el Ingeniero Guillermo Otálora · Digital Forensics (203028123) · Maestría en Ciberseguridad · UNAD</div>
+</div>
+<script>
+window.UI_TEXT = {
+ es: { title: 'Laboratorio 01 · Análisis forense de memoria RAM', sub: 'Video tutorial · Parte 1: lo que hace el estudiante', theme: 'Claro / oscuro', lang: 'Idioma', voice: 'Voz', subs: 'Subtítulos', about: 'Sobre este video', aboutT: 'Recorrido completo de la Parte 1 del laboratorio, con las salidas y respuestas reales: verificar la imagen, instalar Volatility3, ejecutar los plugins, buscar las URLs, guardar los anexos y redactar el informe. Use el menú de capítulos para ir a cualquier paso.', keys: 'Atajos: espacio = reproducir o pausar · ← → = 5 segundos · F = pantalla completa · C = subtítulos.', chapters: 'Capítulos', tabEst: 'Parte 1 · Estudiante', tabDoc: 'Parte 2 · Docente' },
+ en: { title: 'Lab 01 · RAM memory forensic analysis', sub: 'Video tutorial · Part 1: what the student does', theme: 'Light / dark', lang: 'Language', voice: 'Voice', subs: 'Subtitles', about: 'About this video', aboutT: 'A complete walkthrough of Part 1 of the lab, with the real outputs and answers: verify the image, install Volatility3, run the plugins, find the URLs, save the annexes and write the report. Use the chapter menu to jump to any step.', keys: 'Shortcuts: space = play or pause · ← → = 5 seconds · F = full screen · C = subtitles.', chapters: 'Chapters', tabEst: 'Part 1 · Student', tabDoc: 'Part 2 · Instructor' }
+};
+</script>
+<script>
+(function () {
+  var V = location.hash === '#docente' ? 'doc' : 'est';
+  window.VBASE = V + '/'; window.VKEY = V;
+  document.querySelectorAll('[data-tab]').forEach(function (b) {
+    b.classList.toggle('on', b.dataset.tab === V);
+    b.addEventListener('click', function () { if (b.dataset.tab !== V) { location.hash = b.dataset.tab === 'doc' ? '#docente' : '#estudiante'; location.reload(); } });
+  });
+  window.addEventListener('hashchange', function () { var n = location.hash === '#docente' ? 'doc' : 'est'; if (n !== V) location.reload(); });
+  var iv = document.getElementById('introv');
+  if (V === 'est') iv.src = 'est/intro.mp4'; else iv.remove();
+  if (V === 'doc') { UI_TEXT.es.sub = 'Video tutorial · Parte 2: cómo se obtuvo la evidencia (docente)'; UI_TEXT.en.sub = 'Video tutorial · Part 2: how the evidence was obtained (instructor)';
+    UI_TEXT.es.aboutT = 'Detrás de cámaras de la evidencia: conceptos de memoria volátil, captura de la RAM con FTK Imager y WinPmem, sellado con hashes, hora y solo lectura, cadena de custodia y comparación de herramientas. Use el menú de capítulos para ir a cualquier parte.';
+    UI_TEXT.en.aboutT = 'Behind the scenes of the evidence: volatile memory concepts, RAM capture with FTK Imager and WinPmem, sealing with hashes, time and read-only, chain of custody and tool comparison. Use the chapter menu to jump anywhere.'; }
+  document.write('<script src="' + V + '/data.js"><\/script><script src="' + V + '/scenes.js"><\/script><script src="player.js"><\/script>');
+})();
+</script>
+<script>
+(function(){const r=document.getElementById('subsz'),root=document.documentElement;let v=1;try{v=parseFloat(localStorage.getItem('lab01v-subsz'))||1}catch(e){}
+const ap=x=>{root.style.setProperty('--subsz',x);r.value=x;r.title=(document.documentElement.lang==='en'?'Subtitle size ':'Tamaño de subtítulos ')+Math.round(x*100)+'%';};ap(v);
+r.addEventListener('input',()=>{ap(r.value);try{localStorage.setItem('lab01v-subsz',r.value)}catch(e){}});
+['keydown','keyup'].forEach(t=>r.addEventListener(t,e=>{if(e.key.startsWith('Arrow'))e.stopPropagation();}));})();
+</script>
+</body>
+</html>
